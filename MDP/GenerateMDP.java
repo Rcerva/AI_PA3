@@ -118,4 +118,36 @@ public class GenerateMDP {
             this.reward = reward;
         }
     }
+
+    public Map<String, Integer> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(Map<String, Integer> rewards) {
+        this.rewards = rewards;
+    }
+
+    public void setTransitions(Map<String, Map<String, TransitionTuple>> transitions) {
+        this.transitions = transitions;
+    }
+
+    public Map<String,Map<String,TransitionTuple>> getTransitions(){
+        return this.transitions;
+    }
+
+    public Map<String, Double> getStateValues() {
+        return stateValues;
+    }
+
+    public void setStateValues(Map<String, Double> stateValues) {
+        this.stateValues = stateValues;
+    }
+
+    public Map<String, Integer> getStateVisits() {
+        return stateVisits;
+    }
+
+    public void setStateVisits(Map<String, Integer> stateVisits) {
+        this.stateVisits = stateVisits;
+    }
 }
