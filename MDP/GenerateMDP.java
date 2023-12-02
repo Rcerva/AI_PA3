@@ -3,7 +3,7 @@ package MDP;
 import java.util.*;
 
 public class GenerateMDP {
-    //States
+    //States Constants
     private final String RU8p = "RU8p";
     private final String RU10p = "RU10p";
     private final String RU8a = "RU8a";
@@ -17,8 +17,8 @@ public class GenerateMDP {
     private final String TU10a = "TU10a";
 
     private final String TD10a = "TD10a";
-
-
+    
+    //Attributes
     private Map<String, Integer> rewards;
     private Map<String, Map<String, TransitionTuple>> transitions;
     private Map<String, Double> stateValues;
