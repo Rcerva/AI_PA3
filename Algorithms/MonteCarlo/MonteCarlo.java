@@ -51,8 +51,8 @@ public class MonteCarlo {
 
       // Perform first-visit Monte Carlo update
       Set<String> visitedStates = new HashSet<>();
-      for (int epiState = 0; epiState < epiStates.size(); epiState++) {
-        String state = epiStates.get(epiState);
+      for (int t = 0; t < epiStates.size(); t++) {
+        String state = epiStates.get(t);
 
         // Check if the current state is being visited for the first time in the episode
         if (!visitedStates.contains(state)) {
@@ -61,7 +61,7 @@ public class MonteCarlo {
 
           // Calculate the return (G_t) from the current time step to the end of the episode
           double G_t = 0.0;
-          List<Integer> remainingRewards = epiRewards.subList(epiState, epiRewards.size());
+          List<Integer> remainingRewards = epiRewards.subList(t, epiRewards.size());
 
           for (int reward : remainingRewards) {
             G_t += reward;
