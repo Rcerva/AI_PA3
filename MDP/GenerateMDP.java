@@ -20,6 +20,7 @@ public class GenerateMDP {
     
     //Attributes
     private Map<String, Integer> rewards;
+    private String[] states = {RU8p, RU10p, RU8a, RU10a, RD10p, RD8a, RD10a, TU10p, TU10a, TD10a, "11a"};
     private Map<String, Map<String, TransitionTuple>> transitions;
     private Map<String, Double> stateValues;
     private Map<String, Integer> stateVisits;
@@ -29,7 +30,6 @@ public class GenerateMDP {
 
     public GenerateMDP(){
         // Define states, actions, rewards, and transition probabilities
-        String[] states = {RU8p, RU10p, RU8a, RU10a, RD10p, RD8a, RD10a, TU10p, TU10a, TD10a, "11a"};
 
         this.rewards = new HashMap<>();
         for (String state : states) {
@@ -149,5 +149,13 @@ public class GenerateMDP {
 
     public void setStateVisits(Map<String, Integer> stateVisits) {
         this.stateVisits = stateVisits;
+    }
+
+    public String[] getStates() {
+        return states;
+    }
+
+    public void setStates(String[] states) {
+        this.states = states;
     }
 }
