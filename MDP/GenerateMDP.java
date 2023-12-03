@@ -118,4 +118,59 @@ public class GenerateMDP {
             this.reward = reward;
         }
     }
+    public String getStartState() {
+        return RU8p;
+    }
+    
+    public boolean isTerminalState(String state) {
+        // Check if the state is a terminal state
+        return state.equals("11a");
+    }
+    
+    public String[] getActions() {
+        return new String[]{"P", "R", "S"};
+    }
+    
+    public double getQValue(String state, String action) {
+        // Use a method that directly checks the presence of the state-action pair
+        return stateValues.getOrDefault(getStateActionPair(state, action), 0.0);
+    }
+    
+    public void setQValue(String state, String action, double value) {
+        String stateActionPair = getStateActionPair(state, action);
+        stateValues.put(stateActionPair, value);
+    }
+    
+    public double getMaxQValue(String state) {
+        return stateValues.getOrDefault(state, 0.0);
+    }
+    
+    public TransitionTuple getTransition(String state, String action) {
+        Map<String, TransitionTuple> actionTransitions = transitions.get(state);
+    
+        if (actionTransitions != null && actionTransitions.containsKey(action)) {
+            return actionTransitions.get(action); // Return the corresponding TransitionTuple
+        } else {
+            return getDefaultTransition(state, action);
+        }
+    }
+    
+    public Map<String, Double> getStateValues() {
+        return new HashMap<>(stateValues);
+    }
+    
+    private String getStateActionPair(String state, String action) {
+        return state + "_" + action;
+    }
+    
+    private TransitionTuple getDefaultTransition(String state, String action) {
+        if ("RD10p".equals(state) && "S".equals(action)) {
+            return new TransitionTuple("RD8a", 1.0, 0);
+        } else if ("TU10p".equals(state) && "S".equals(action)) {
+            return new TransitionTuple("RU10a", 1.0, 2);
+        } else {
+            return new TransitionTuple("11a", 0.0, 0);
+        }
+    }
+    
 }
