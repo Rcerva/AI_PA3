@@ -172,5 +172,45 @@ public class GenerateMDP {
             return new TransitionTuple("11a", 0.0, 0);
         }
     }
-    
+    public Map<String, Map<String, TransitionTuple>> getTransitions() {
+        return transitions;
+    }
+    public double getActionProbability(String state, String action) {
+        Map<String, TransitionTuple> actionTransitions = transitions.get(state);
+
+        if (actionTransitions != null && actionTransitions.containsKey(action)) {
+            return actionTransitions.get(action).getProbability();
+        } else {
+            return 0.0; // If the action is not present, return 0 probability
+        }
+    }
+    public Map<String, Map<String, TransitionTuple>> getTransitionsValueIteration() {
+        // Create a deep copy of the transitions map
+        Map<String, Map<String, TransitionTuple>> transitionsCopy = new HashMap<>();
+
+        for (Map.Entry<String, Map<String, TransitionTuple>> entry : transitions.entrySet()) {
+            String state = entry.getKey();
+            Map<String, TransitionTuple> actionTransitions = entry.getValue();
+
+            // Create a new map for the state in the copy
+            Map<String, TransitionTuple> actionTransitionsCopy = new HashMap<>();
+
+            // Copy each transition tuple
+            for (Map.Entry<String, TransitionTuple> actionEntry : actionTransitions.entrySet()) {
+                String action = actionEntry.getKey();
+                TransitionTuple transitionTuple = actionEntry.getValue();
+                TransitionTuple transitionTupleCopy = new TransitionTuple(
+                        transitionTuple.getNextState(),
+                        transitionTuple.getProbability(),
+                        transitionTuple.getReward()
+                );
+
+                actionTransitionsCopy.put(action, transitionTupleCopy);
+            }
+
+            transitionsCopy.put(state, actionTransitionsCopy);
+        }
+
+        return transitionsCopy;
+    }
 }
