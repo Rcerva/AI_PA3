@@ -1,6 +1,6 @@
 # How To Run:
-#1. Navigate to Application/Main 
-#2. Run Main Function in Application/Main 
+1.Navigate to Application/Main 
+2.Run Main Function in Application/Main 
 
 # CS 4320/5314
 # PA3: Solving MDPs
