@@ -1,3 +1,7 @@
+# How To Run:
+#1. Navigate to Application/Main 
+#2. Run Main Function in Application/Main 
+
 # CS 4320/5314
 # PA3: Solving MDPs
 # DUE: Sunday, Dec 3 at 11:59 PM
