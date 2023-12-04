@@ -5,49 +5,49 @@ import java.util.*;
 
 
 public class ValueIteration {
-    public static void main(String[] args) {
-        GenerateMDP mdp = new GenerateMDP();
-        double discountFactor = 0.99;
-        double epsilon = 0.001;
+  public void valueIterate() {
+    GenerateMDP mdp = new GenerateMDP();
+    double discountFactor = 0.99;
+    double epsilon = 0.001;
 
-        // Initialize state values to 0
-        Map<String, Double> stateValues = mdp.getStateValues();
+    // Initialize state values to 0
+    Map<String, Double> stateValues = mdp.getStateValues();
 
-        // Value Iteration
-        int iteration = 0;
-        while (true) {
-            double maxChange = 0.0;
+    // Value Iteration
+    int iteration = 0;
+    while (true) {
+        double maxChange = 0.0;
 
-            // Iterate over all states
-            for (String state : stateValues.keySet()) {
-                if (!mdp.isTerminalState(state)) {
-                    double oldValue = stateValues.get(state);
-                    double bestActionValue = calculateBestActionValue(mdp, state, discountFactor);
-                    stateValues.put(state, bestActionValue);
+        // Iterate over all states
+        for (String state : stateValues.keySet()) {
+            if (!mdp.isTerminalState(state)) {
+                double oldValue = stateValues.get(state);
+                double bestActionValue = calculateBestActionValue(mdp, state, discountFactor);
+                stateValues.put(state, bestActionValue);
 
-                    // Update the maximum change
-                    maxChange = Math.max(maxChange, Math.abs(bestActionValue - oldValue));
-                }
-            }
-
-            // Print values and check convergence
-            System.out.println("Iteration: " + iteration);
-            printStateValues(stateValues);
-            iteration++;
-
-            // Check for convergence
-            if (maxChange < epsilon) {
-                break;
+                // Update the maximum change
+                maxChange = Math.max(maxChange, Math.abs(bestActionValue - oldValue));
             }
         }
 
-        // Print final results
-        System.out.println("Number of iterations: " + iteration);
-        System.out.println("Final values:");
+        // Print values and check convergence
+        System.out.println("Iteration: " + iteration);
         printStateValues(stateValues);
-        System.out.println("Optimal policy:");
-        printOptimalPolicy(mdp, stateValues);
+        iteration++;
+
+        // Check for convergence
+        if (maxChange < epsilon) {
+            break;
+        }
     }
+
+    // Print final results
+    System.out.println("Number of iterations: " + iteration);
+    System.out.println("Final values:");
+    printStateValues(stateValues);
+    System.out.println("Optimal policy:");
+    printOptimalPolicy(mdp, stateValues);
+  }
 
     private static double calculateBestActionValue(GenerateMDP mdp, String state, double discountFactor) {
         double bestActionValue = Double.NEGATIVE_INFINITY;    

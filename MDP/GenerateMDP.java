@@ -213,6 +213,7 @@ public class GenerateMDP {
         }
 
         return transitionsCopy;
+    }
 
     public Map<String, Integer> getRewards() {
         return rewards;
@@ -226,11 +227,12 @@ public class GenerateMDP {
         this.transitions = transitions;
     }
 
-    public Map<String,Map<String,TransitionTuple>> getTransitions(){
+    // Different algortihms getters and setters
+    public Map<String,Map<String,TransitionTuple>> getTheTransitions(){
         return this.transitions;
     }
 
-    public Map<String, Double> getStateValues() {
+    public Map<String, Double> getTheStateValues() {
         return stateValues;
     }
 

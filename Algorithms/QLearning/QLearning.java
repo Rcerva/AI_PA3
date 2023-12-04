@@ -2,20 +2,14 @@ package Algorithms.QLearning;
 import java.util.*;
 import MDP.GenerateMDP;
 public class QLearning {
+    private GenerateMDP mdp = new GenerateMDP();
+    private int numEpisodes = 1000;
+    private double alpha = 0.2;
+    private double gamma = 0.99;
+    private double epsilon = 0.1;
 
-   /*  public static void main(String[] args) {
-        GenerateMDP mdp = new GenerateMDP();
-        int numEpisodes = 1000;
-        double alpha = 0.2;
-        double gamma = 0.99;
-        double epsilon = 0.1;
 
-        runQLearning(mdp, numEpisodes, alpha, gamma, epsilon);
-    }*/
-    public QLearning(){
-
-    }
-    public static void runQLearning(GenerateMDP mdp, int numEpisodes, double alpha, double gamma, double epsilon) {
+    public void runQLearning() {
             Map<String, Double> finalQValues = new HashMap<>();
         for (int episode = 1; episode <= numEpisodes; episode++) {
             double maxQChange = 0.0;
@@ -38,9 +32,9 @@ public class QLearning {
                 double newQValue = currentQValue + currentAlpha * (immediateReward + gamma * maxNextQValue - currentQValue);
 
                 System.out.println("Episode " + episode + ", State: " + currentState + ", Action: " + selectedAction);
-                System.out.println("  Previous QValue: " + currentQValue);
-                System.out.println("  Immediate Reward: " + immediateReward);
-                System.out.println("  New QValue: " + newQValue);
+                System.out.print("  Previous QValue: " + currentQValue);
+                System.out.print(",  Immediate Reward: " + immediateReward);
+                System.out.println(",  New QValue: " + newQValue);
 
                 finalQValues.put(getStateActionPair(currentState, selectedAction), newQValue);
 

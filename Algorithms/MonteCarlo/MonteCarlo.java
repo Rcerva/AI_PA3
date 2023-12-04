@@ -18,7 +18,7 @@ public class MonteCarlo {
 
   public MonteCarlo(){
     this.MDP = new GenerateMDP();
-    this.stateValues = MDP.getStateValues();
+    this.stateValues = MDP.getTheStateValues();
     this.stateVisits = MDP.getStateVisits();
     this.numEpisodes = 50;
     this.alpha = 0.1;
@@ -36,13 +36,13 @@ public class MonteCarlo {
 
       while (!currState.equals("11a")) {
         // Choose action randomly
-        List<String> availActions = new ArrayList<>(MDP.getTransitions().get(currState).keySet());
+        List<String> availActions = new ArrayList<>(MDP.getTheTransitions().get(currState).keySet());
         String action = availActions.get(random.nextInt(availActions.size()));
 
         // Record the state, action, and reward
         epiStates.add(currState);
         epiActions.add(action);
-        MDP.GenerateMDP.TransitionTuple transition = MDP.getTransitions().get(currState).get(action);
+        MDP.GenerateMDP.TransitionTuple transition = MDP.getTheTransitions().get(currState).get(action);
         epiRewards.add(transition.getReward());
 
         // Update current state
