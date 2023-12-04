@@ -3,7 +3,7 @@ package MDP;
 import java.util.*;
 
 public class GenerateMDP {
-    //States
+    //States Constants
     private final String RU8p = "RU8p";
     private final String RU10p = "RU10p";
     private final String RU8a = "RU8a";
@@ -17,9 +17,10 @@ public class GenerateMDP {
     private final String TU10a = "TU10a";
 
     private final String TD10a = "TD10a";
-
-
+    
+    //Attributes
     private Map<String, Integer> rewards;
+    private String[] states = {RU8p, RU10p, RU8a, RU10a, RD10p, RD8a, RD10a, TU10p, TU10a, TD10a, "11a"};
     private Map<String, Map<String, TransitionTuple>> transitions;
     private Map<String, Double> stateValues;
     private Map<String, Integer> stateVisits;
@@ -29,7 +30,6 @@ public class GenerateMDP {
 
     public GenerateMDP(){
         // Define states, actions, rewards, and transition probabilities
-        String[] states = {RU8p, RU10p, RU8a, RU10a, RD10p, RD8a, RD10a, TU10p, TU10a, TD10a, "11a"};
 
         this.rewards = new HashMap<>();
         for (String state : states) {
@@ -118,6 +118,7 @@ public class GenerateMDP {
             this.reward = reward;
         }
     }
+
     public String getStartState() {
         return RU8p;
     }
@@ -212,5 +213,44 @@ public class GenerateMDP {
         }
 
         return transitionsCopy;
+
+    public Map<String, Integer> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(Map<String, Integer> rewards) {
+        this.rewards = rewards;
+    }
+
+    public void setTransitions(Map<String, Map<String, TransitionTuple>> transitions) {
+        this.transitions = transitions;
+    }
+
+    public Map<String,Map<String,TransitionTuple>> getTransitions(){
+        return this.transitions;
+    }
+
+    public Map<String, Double> getStateValues() {
+        return stateValues;
+    }
+
+    public void setStateValues(Map<String, Double> stateValues) {
+        this.stateValues = stateValues;
+    }
+
+    public Map<String, Integer> getStateVisits() {
+        return stateVisits;
+    }
+
+    public void setStateVisits(Map<String, Integer> stateVisits) {
+        this.stateVisits = stateVisits;
+    }
+
+    public String[] getStates() {
+        return states;
+    }
+
+    public void setStates(String[] states) {
+        this.states = states;
     }
 }
