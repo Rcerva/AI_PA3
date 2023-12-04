@@ -119,6 +119,101 @@ public class GenerateMDP {
         }
     }
 
+    public String getStartState() {
+        return RU8p;
+    }
+    
+    public boolean isTerminalState(String state) {
+        // Check if the state is a terminal state
+        return state.equals("11a");
+    }
+    
+    public String[] getActions() {
+        return new String[]{"P", "R", "S"};
+    }
+    
+    public double getQValue(String state, String action) {
+        // Use a method that directly checks the presence of the state-action pair
+        return stateValues.getOrDefault(getStateActionPair(state, action), 0.0);
+    }
+    
+    public void setQValue(String state, String action, double value) {
+        String stateActionPair = getStateActionPair(state, action);
+        stateValues.put(stateActionPair, value);
+    }
+    
+    public double getMaxQValue(String state) {
+        return stateValues.getOrDefault(state, 0.0);
+    }
+    
+    public TransitionTuple getTransition(String state, String action) {
+        Map<String, TransitionTuple> actionTransitions = transitions.get(state);
+    
+        if (actionTransitions != null && actionTransitions.containsKey(action)) {
+            return actionTransitions.get(action); // Return the corresponding TransitionTuple
+        } else {
+            return getDefaultTransition(state, action);
+        }
+    }
+    
+    public Map<String, Double> getStateValues() {
+        return new HashMap<>(stateValues);
+    }
+    
+    private String getStateActionPair(String state, String action) {
+        return state + "_" + action;
+    }
+    
+    private TransitionTuple getDefaultTransition(String state, String action) {
+        if ("RD10p".equals(state) && "S".equals(action)) {
+            return new TransitionTuple("RD8a", 1.0, 0);
+        } else if ("TU10p".equals(state) && "S".equals(action)) {
+            return new TransitionTuple("RU10a", 1.0, 2);
+        } else {
+            return new TransitionTuple("11a", 0.0, 0);
+        }
+    }
+    public Map<String, Map<String, TransitionTuple>> getTransitions() {
+        return transitions;
+    }
+    public double getActionProbability(String state, String action) {
+        Map<String, TransitionTuple> actionTransitions = transitions.get(state);
+
+        if (actionTransitions != null && actionTransitions.containsKey(action)) {
+            return actionTransitions.get(action).getProbability();
+        } else {
+            return 0.0; // If the action is not present, return 0 probability
+        }
+    }
+    public Map<String, Map<String, TransitionTuple>> getTransitionsValueIteration() {
+        // Create a deep copy of the transitions map
+        Map<String, Map<String, TransitionTuple>> transitionsCopy = new HashMap<>();
+
+        for (Map.Entry<String, Map<String, TransitionTuple>> entry : transitions.entrySet()) {
+            String state = entry.getKey();
+            Map<String, TransitionTuple> actionTransitions = entry.getValue();
+
+            // Create a new map for the state in the copy
+            Map<String, TransitionTuple> actionTransitionsCopy = new HashMap<>();
+
+            // Copy each transition tuple
+            for (Map.Entry<String, TransitionTuple> actionEntry : actionTransitions.entrySet()) {
+                String action = actionEntry.getKey();
+                TransitionTuple transitionTuple = actionEntry.getValue();
+                TransitionTuple transitionTupleCopy = new TransitionTuple(
+                        transitionTuple.getNextState(),
+                        transitionTuple.getProbability(),
+                        transitionTuple.getReward()
+                );
+
+                actionTransitionsCopy.put(action, transitionTupleCopy);
+            }
+
+            transitionsCopy.put(state, actionTransitionsCopy);
+        }
+
+        return transitionsCopy;
+
     public Map<String, Integer> getRewards() {
         return rewards;
     }
